@@ -31,9 +31,17 @@ values ('Concert','Phnom Penh');
 insert into events(event_name, event_date, venue_id)
 values ('Sting', '10-01-2025',1);
 
-insert into attendees(attendant_name, email)
-values ('Try','try@gmail.com');
+insert into attendees(attendee_name, email)
+values ('Dara','Dara@gmail.com');
 
-insert into event_attendee(event_id, attendant_id)
-values (1,1);
+insert into event_attendee(event_id, attendee_id)
+values (2,2);
+
+SELECT * from attendees a
+inner join event_attendee ea
+on a.attendee_id = ea.attendee_id
+where ea.event_id = 1;
+
+delete from event_attendee where event_id = 2;
+
 

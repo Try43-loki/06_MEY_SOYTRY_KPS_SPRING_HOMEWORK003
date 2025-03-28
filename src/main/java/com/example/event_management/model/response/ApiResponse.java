@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @Builder
 public class ApiResponse <T> {
     private String message;
-    private HttpStatus status;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T payload;
+    private HttpStatus status;
     private LocalDateTime timestamp;
 }
