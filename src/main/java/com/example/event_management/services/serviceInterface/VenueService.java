@@ -10,5 +10,7 @@ public interface VenueService {
     List<Venue> getAllVenues(Integer offset,Integer limit);
     Venue getVenueById(Integer venueId);
     Venue addVenue(VenueRequest venueRequest);
+    Venue updateVenueById(VenueRequest venueRequest, Integer venueId);
+    void deleteVenueById(Integer venueId);
 
 }

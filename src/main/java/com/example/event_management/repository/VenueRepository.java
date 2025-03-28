@@ -2,9 +2,7 @@ package com.example.event_management.repository;
 
 import com.example.event_management.model.Venue;
 import com.example.event_management.model.request.VenueRequest;
-import lombok.Data;
 import org.apache.ibatis.annotations.*;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -16,11 +14,11 @@ public interface VenueRepository {
             limit #{limit}
             offset #{limit} * (#{offset} - 1)
             """)
-    @Results(id = "VenueMapping" , value = {
+    @Results(id = "VenueMapping", value = {
             @Result(property = "venueId", column = "venue_id"),
             @Result(property = "venueName", column = "venue_name"),
     })
-    List<Venue> findAllVenues(Integer offset,Integer limit);
+    List<Venue> findAllVenues(Integer offset, Integer limit);
 
     // get venue by id
     @ResultMap("VenueMapping")
@@ -29,9 +27,24 @@ public interface VenueRepository {
 
     //-- insert venue
     @Select("""
-    INSERT INTO venues(venue_name,location)
-    values (#{venue.venueName},#{venue.location})
-""")
+                INSERT INTO venues(venue_name,location)
+                values (#{venue.venueName},#{venue.location})
+                returning *
+            """)
+    @ResultMap("VenueMapping")
     Venue insertVenue(@Param("venue") VenueRequest venueRequest);
 
+    // update venue
+    @Select("""
+                Update venues
+                SET venue_name = #{venue.venueName},location = #{venue.location}
+                where venue_id = #{venueId}
+                returning *
+            """)
+    @ResultMap("VenueMapping")
+    Venue updateVenueById(@Param("venue") VenueRequest venueRequest, Integer venueId);
+
+    // delete venue
+    @Delete("delete from venues where venue_id = #{venueId}")
+    void deleteVenueById(Integer venueId);
 }

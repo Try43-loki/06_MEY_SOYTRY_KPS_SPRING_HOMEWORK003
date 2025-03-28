@@ -14,9 +14,12 @@ import java.time.LocalDateTime;
 public class GlobalException {
     @ExceptionHandler(UserNotFoundException.class)
     public ProblemDetail handleUserNotFoundException(UserNotFoundException e) {
-        ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND,e.getMessage());
-        detail.setType(URI.create("http://localhost:8080/api/v1/notfound"));
+        ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,e.getMessage());
+        detail.setType(URI.create("about:blank"));
+        detail.setTitle("Bad request");
+        detail.setInstance(URI.create("/api/v1/venue"));
         detail.setProperty("timestamp", LocalDateTime.now());
+
         return detail ;
     }
 

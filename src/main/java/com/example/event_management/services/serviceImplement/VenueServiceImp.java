@@ -41,5 +41,22 @@ public class VenueServiceImp implements VenueService {
         return venueRepository.insertVenue(venueRequest);
     }
 
+    @Override
+    public Venue updateVenueById(VenueRequest venueRequest, Integer venueId) {
+        Venue venue = venueRepository.findVenueById(venueId);
+        if(venueId < 0 ){
+            throw new UserNotFoundException("Venue ID must be greater than 0");
+        }
+        if(venue==null){
+            throw new UserNotFoundException("Venue ID " + venueId + " not found");
+        }
+        return venueRepository.updateVenueById(venueRequest, venueId);
+    }
+
+    @Override
+    public void deleteVenueById(Integer venueId) {
+        venueRepository.deleteVenueById(venueId);
+    }
+
 
 }
