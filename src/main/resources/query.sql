@@ -35,7 +35,7 @@ insert into attendees(attendee_name, email)
 values ('Dara','Dara@gmail.com');
 
 insert into event_attendee(event_id, attendee_id)
-values (2,2);
+values (2,10);
 
 SELECT * from attendees a
 inner join event_attendee ea
@@ -43,5 +43,7 @@ on a.attendee_id = ea.attendee_id
 where ea.event_id = 1;
 
 delete from event_attendee where event_id = 2;
+
+SELECT * from venues where venue_id = 10;
 
 

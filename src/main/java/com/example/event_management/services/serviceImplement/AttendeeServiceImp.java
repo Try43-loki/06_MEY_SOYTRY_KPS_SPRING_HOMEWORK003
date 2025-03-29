@@ -1,12 +1,10 @@
 package com.example.event_management.services.serviceImplement;
 
 import com.example.event_management.exception.UserNotFoundException;
-import com.example.event_management.model.Attendee;
-import com.example.event_management.model.request.AttendeeRequest;
-import com.example.event_management.model.request.VenueRequest;
+import com.example.event_management.model.entity.Attendee;
+import com.example.event_management.model.dto.request.AttendeeRequest;
 import com.example.event_management.repository.AttendeeRepository;
 import com.example.event_management.services.serviceInterface.AttendeeService;
-import com.example.event_management.services.serviceInterface.VenueService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,9 +44,6 @@ public class AttendeeServiceImp implements AttendeeService {
     @Override
     public Attendee updateAttendeeById(AttendeeRequest attendeeRequest, Integer attendeeId) {
         Attendee venue = attendeeRepository.findAttendeeById(attendeeId);
-        if(attendeeId < 0 ){
-            throw new UserNotFoundException("Attendee ID must be greater than 0");
-        }
         if(venue==null){
             throw new UserNotFoundException("Attendee ID " + attendeeId + " not found");
         }
@@ -57,6 +52,9 @@ public class AttendeeServiceImp implements AttendeeService {
 
     @Override
     public void deleteAttendeeById(Integer attendeeId) {
+      if(  attendeeRepository.findAttendeeById(attendeeId) == null){
+          throw new UserNotFoundException("Attendee ID " + attendeeId + " not found");
+      }
         attendeeRepository.deleteAttendeeById(attendeeId);
     }
 

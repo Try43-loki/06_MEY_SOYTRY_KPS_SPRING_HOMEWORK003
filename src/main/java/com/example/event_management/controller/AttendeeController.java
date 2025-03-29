@@ -1,11 +1,11 @@
 package com.example.event_management.controller;
 
-import com.example.event_management.model.Attendee;
-import com.example.event_management.model.request.AttendeeRequest;
-import com.example.event_management.model.request.VenueRequest;
-import com.example.event_management.model.response.ApiResponse;
+import com.example.event_management.model.entity.Attendee;
+import com.example.event_management.model.dto.request.AttendeeRequest;
+import com.example.event_management.model.dto.response.ApiResponse;
 import com.example.event_management.services.serviceInterface.AttendeeService;
-import com.example.event_management.services.serviceInterface.VenueService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class AttendeeController {
 
     // get all attendee
     @GetMapping
-    public ResponseEntity<ApiResponse<List<Attendee>>> getAllVenues(@RequestParam (defaultValue = "1") Integer offset , @RequestParam (defaultValue = "10") Integer limit) {
+    public ResponseEntity<ApiResponse<List<Attendee>>> getAllVenues(@RequestParam(defaultValue = "1")  @Positive Integer offset , @RequestParam (defaultValue = "10") @Positive Integer limit) {
          ApiResponse<List<Attendee>> response = ApiResponse.<List<Attendee>>builder()
                  .message("Get all venues successfully")
                  .payload(attendeeService.getAllAttendees(offset, limit))
@@ -37,7 +37,7 @@ public class AttendeeController {
 
     // get Attendee by id
     @GetMapping("{attendee-id}")
-    public ResponseEntity<ApiResponse<Attendee>> getVenueById(@PathVariable("attendee-id") Integer attendeeId) {
+    public ResponseEntity<ApiResponse<Attendee>> getVenueById(@PathVariable("attendee-id") @Positive Integer attendeeId) {
         ApiResponse<Attendee> response = ApiResponse.<Attendee>builder()
                 .message("Get attendee" + attendeeId + "successfully")
                 .payload(attendeeService.getAttendeeById(attendeeId))
@@ -49,7 +49,7 @@ public class AttendeeController {
 
     // Post Attendee
     @PostMapping
-    public ResponseEntity<ApiResponse<Attendee>> addVenue(@RequestBody AttendeeRequest attendeeRequest) {
+    public ResponseEntity<ApiResponse<Attendee>> addVenue(@RequestBody @Valid AttendeeRequest attendeeRequest) {
         ApiResponse<Attendee> response = ApiResponse.<Attendee>builder()
                 .message("Add attendee successfully")
                 .payload(attendeeService.addAttendee(attendeeRequest))
@@ -61,7 +61,7 @@ public class AttendeeController {
 
     // Update Attendee
     @PutMapping("{attendee-id}")
-    public ResponseEntity<ApiResponse<Attendee>> updateVenueById (@RequestBody AttendeeRequest attendeeRequest, @PathVariable("attendee-id") Integer attendeeId) {
+    public ResponseEntity<ApiResponse<Attendee>> updateVenueById (@PathVariable("attendee-id") @Positive Integer attendeeId,@RequestBody @Valid AttendeeRequest attendeeRequest ) {
         ApiResponse<Attendee> response = ApiResponse.<Attendee>builder()
                 .message("Update attendee" + attendeeId + "successfully")
                 .payload(attendeeService.updateAttendeeById(attendeeRequest ,attendeeId))
@@ -73,7 +73,7 @@ public class AttendeeController {
 
     // Delete Attendee
     @DeleteMapping("{attendee-id}")
-    public ResponseEntity<ApiResponse<Attendee>> deleteVenueById(@PathVariable("attendee-id") Integer attendeeId) {
+    public ResponseEntity<ApiResponse<Attendee>> deleteVenueById(@PathVariable("attendee-id") @Positive Integer attendeeId) {
         attendeeService.deleteAttendeeById(attendeeId);
         ApiResponse<Attendee> response = ApiResponse.<Attendee>builder()
                 .message("Delete attendee" + attendeeId + "successfully")

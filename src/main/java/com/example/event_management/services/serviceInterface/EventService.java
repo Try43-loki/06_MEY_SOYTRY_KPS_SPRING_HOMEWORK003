@@ -1,7 +1,7 @@
 package com.example.event_management.services.serviceInterface;
 
-import com.example.event_management.model.Event;
-import com.example.event_management.model.request.EventRequest;
+import com.example.event_management.model.entity.Event;
+import com.example.event_management.model.dto.request.EventRequest;
 
 import java.util.List;
 

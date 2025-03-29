@@ -1,4 +1,4 @@
-package com.example.event_management.model.response;
+package com.example.event_management.model.dto.response;
 
 import org.springframework.http.HttpStatus;
 

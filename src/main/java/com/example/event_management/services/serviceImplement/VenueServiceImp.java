@@ -1,8 +1,8 @@
 package com.example.event_management.services.serviceImplement;
 
 import com.example.event_management.exception.UserNotFoundException;
-import com.example.event_management.model.Venue;
-import com.example.event_management.model.request.VenueRequest;
+import com.example.event_management.model.entity.Venue;
+import com.example.event_management.model.dto.request.VenueRequest;
 import com.example.event_management.repository.VenueRepository;
 import com.example.event_management.services.serviceInterface.VenueService;
 import org.springframework.stereotype.Service;
@@ -55,6 +55,9 @@ public class VenueServiceImp implements VenueService {
 
     @Override
     public void deleteVenueById(Integer venueId) {
+        if(venueRepository.findVenueById(venueId)==null){
+            throw new UserNotFoundException("Venue ID " + venueId + " not found");
+        }
         venueRepository.deleteVenueById(venueId);
     }
 

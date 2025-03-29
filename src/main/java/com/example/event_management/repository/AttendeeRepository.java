@@ -1,7 +1,7 @@
 package com.example.event_management.repository;
 
-import com.example.event_management.model.Attendee;
-import com.example.event_management.model.request.AttendeeRequest;
+import com.example.event_management.model.entity.Attendee;
+import com.example.event_management.model.dto.request.AttendeeRequest;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

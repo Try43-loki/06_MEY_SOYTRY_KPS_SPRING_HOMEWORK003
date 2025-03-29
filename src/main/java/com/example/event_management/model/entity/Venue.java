@@ -1,4 +1,4 @@
-package com.example.event_management.model;
+package com.example.event_management.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
